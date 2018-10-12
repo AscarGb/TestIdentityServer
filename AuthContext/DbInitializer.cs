@@ -25,13 +25,15 @@ namespace DataLayer
         AuthContext _context;
         ConfigurationDbContext _configurationDbContext;
         PersistedGrantDbContext _persistedGrantDbContext;
+        Config _config;
 
         public DbInitializer(IOptions<ConfigurationManager> configurationManager,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             AuthContext context,
             ConfigurationDbContext configurationDbContext,
-            PersistedGrantDbContext persistedGrantDbContext)
+            PersistedGrantDbContext persistedGrantDbContext,
+            Config config)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -39,10 +41,13 @@ namespace DataLayer
             _context = context;
             _configurationDbContext = configurationDbContext;
             _persistedGrantDbContext = persistedGrantDbContext;
+            _config = config;
         }
 
         public void Initialize()
         {
+           // _context.Database.EnsureDeleted();
+
             _context.Database.Migrate();
             _configurationDbContext.Database.Migrate();
             _persistedGrantDbContext.Database.Migrate();
@@ -59,8 +64,6 @@ namespace DataLayer
                     _roleManager.CreateAsync(new IdentityRole { Name = ServerRoles.User }).GetAwaiter().GetResult();
 
                     _userManager.AddToRoleAsync(user, ServerRoles.Admin).GetAwaiter().GetResult();
-
-                    // _context.SaveChanges();
                 }
                 else
                 {
@@ -94,7 +97,7 @@ namespace DataLayer
 
             if (!_configurationDbContext.Clients.Any())
             {
-                foreach (var client in Config.GetClients().ToList())
+                foreach (var client in _config.GetClients().ToList())
                 {
                     _configurationDbContext.Clients.Add(client.ToEntity());
                 }
@@ -103,7 +106,7 @@ namespace DataLayer
 
             if (!_configurationDbContext.IdentityResources.Any())
             {
-                foreach (var resource in Config.GetIdentityResources().ToList())
+                foreach (var resource in _config.GetIdentityResources().ToList())
                 {
                     _configurationDbContext.IdentityResources.Add(resource.ToEntity());
                 }
@@ -112,7 +115,7 @@ namespace DataLayer
 
             if (!_configurationDbContext.ApiResources.Any())
             {
-                foreach (var resource in Config.GetApiResources().ToList())
+                foreach (var resource in _config.GetApiResources().ToList())
                 {
                     _configurationDbContext.ApiResources.Add(resource.ToEntity());
                 }

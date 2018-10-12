@@ -34,6 +34,8 @@ namespace TestIdentityServer
             // services.AddTransient<ConfigurationDbContext>();
             services.AddTransient<DbInitializer>();
 
+            services.AddTransient<Config>();
+
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             //конфиги из файла

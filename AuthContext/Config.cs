@@ -1,16 +1,22 @@
 ﻿using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Types;
 
 namespace DataLayer
 {
     public class Config
     {
-        // scopes define the resources in your system
-        public static IEnumerable<IdentityResource> GetIdentityResources()
+        IOptions<ConfigurationManager> _configurationManager;
+        public Config(IOptions<ConfigurationManager> configurationManager)
+        {
+            _configurationManager = configurationManager;
+        }
+        public IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>
             {
@@ -19,31 +25,26 @@ namespace DataLayer
             };
         }
 
-        public static IEnumerable<ApiResource> GetApiResources()
+        public IEnumerable<ApiResource> GetApiResources()
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource(_configurationManager.Value.ApiName, _configurationManager.Value.ApiName)
             };
         }
 
-        // clients want to access resources (aka scopes)
-        public static IEnumerable<Client> GetClients()
+        public IEnumerable<Client> GetClients()
         {
-            // client credentials client
             return new List<Client>
             {
                 new Client
                 {
-                    ClientId = "browser",
+                    ClientId = _configurationManager.Value.ClientId,
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
-                    /* ClientSecrets =
-                     {
-                         new Secret("secret".Sha256())
-                     },*/
-                    AllowedScopes = { "api1" },
-                    //включаем refresh_token
+                    RequireClientSecret = false,
+                    AllowedScopes = { _configurationManager.Value.ApiName,
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile},
                     AllowOfflineAccess = true
                 }
         };
