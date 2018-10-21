@@ -91,7 +91,7 @@ namespace TestIdentityServer
                         builder.AddSigningCredential(RSA.GenerateRsaKeys());
                     }
                     break;
-                case "sert":
+                case "cert":
                     {
                         builder.AddSigningCredential(new X509Certificate2(signingCredentialConfig.SertName, signingCredentialConfig.SertPsw));
                     }
