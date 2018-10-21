@@ -93,7 +93,7 @@ namespace TestIdentityServer
                     break;
                 case "cert":
                     {
-                        builder.AddSigningCredential(new X509Certificate2(signingCredentialConfig.SertName, signingCredentialConfig.SertPsw));
+                        builder.AddSigningCredential(new X509Certificate2(signingCredentialConfig.CertName, signingCredentialConfig.CertPsw));
                     }
                     break;
                 default:

@@ -7,7 +7,7 @@ namespace SigningCredential
     public class SigningCredentialConfig
     {
         public string SigningCredentialType { get; set; }
-        public string SertName { get; set; }
-        public string SertPsw { get; set; }
+        public string CertName { get; set; }
+        public string CertPsw { get; set; }
     }
 }
