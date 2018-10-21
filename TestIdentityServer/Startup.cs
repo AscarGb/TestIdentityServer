@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using DataLayer;
 using IdentityServer4.EntityFramework.DbContexts;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SigningCredential;
 using Types;
 
 namespace TestIdentityServer
@@ -70,17 +72,35 @@ namespace TestIdentityServer
                             sql => sql.MigrationsAssembly(migrationsAssembly));
 
                  // this enables automatic token cleanup. this is optional.
-               //  options.EnableTokenCleanup = true;
-                // options.TokenCleanupInterval = 15; // frequency in seconds to cleanup stale grants. 15 is useful during debugging
+                 //  options.EnableTokenCleanup = true;
+                 // options.TokenCleanupInterval = 15; // frequency in seconds to cleanup stale grants. 15 is useful during debugging
              });
 
-            if (Environment.IsDevelopment())
+            SigningCredentialConfig signingCredentialConfig = Configuration.GetSection("SigningCredentialConfig").Get<SigningCredentialConfig>();
+
+
+            switch (signingCredentialConfig.SigningCredentialType)
             {
-                builder.AddDeveloperSigningCredential();
-            }
-            else
-            {
-                throw new Exception("need to configure key material");
+                case "default":
+                    {
+                        builder.AddDeveloperSigningCredential();
+                    }
+                    break;
+                case "customRsa":
+                    {
+                        builder.AddSigningCredential(RSA.GenerateRsaKeys());
+                    }
+                    break;
+                case "sert":
+                    {
+                        builder.AddSigningCredential(new X509Certificate2(signingCredentialConfig.SertName, signingCredentialConfig.SertPsw));
+                    }
+                    break;
+                default:
+                    {
+                        builder.AddDeveloperSigningCredential();
+                    }
+                    break;
             }
         }
 

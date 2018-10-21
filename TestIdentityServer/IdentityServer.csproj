@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthContext\DataLayer.csproj" />
+    <ProjectReference Include="..\SigningCredential\SigningCredential.csproj" />
   </ItemGroup>
 
 </Project>

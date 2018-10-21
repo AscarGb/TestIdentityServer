@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "AuthContext\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Types", "Types\Types.csproj", "{C0FD70C4-5158-4928-A409-864989DD8D18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataApi", "DataApi\DataApi.csproj", "{6AB67050-5CA3-47E8-8B62-4345279AB918}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataApi", "DataApi\DataApi.csproj", "{6AB67050-5CA3-47E8-8B62-4345279AB918}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigningCredential", "SigningCredential\SigningCredential.csproj", "{6EF9BF8D-EC02-4B55-9032-731E44FBAB4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6AB67050-5CA3-47E8-8B62-4345279AB918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AB67050-5CA3-47E8-8B62-4345279AB918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AB67050-5CA3-47E8-8B62-4345279AB918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EF9BF8D-EC02-4B55-9032-731E44FBAB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EF9BF8D-EC02-4B55-9032-731E44FBAB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EF9BF8D-EC02-4B55-9032-731E44FBAB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EF9BF8D-EC02-4B55-9032-731E44FBAB4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
