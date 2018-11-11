@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IdentityServer.Data.Migrations.IdentityServer.Auth
 {
     [DbContext(typeof(AuthContext))]
-    [Migration("20181004174220_InitialAuthMigration")]
+    [Migration("20181111013021_InitialAuthMigration")]
     partial class InitialAuthMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

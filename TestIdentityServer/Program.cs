@@ -16,7 +16,7 @@ namespace TestIdentityServer
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
+            var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
@@ -35,9 +35,18 @@ namespace TestIdentityServer
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("hostsettings.json", optional: true)
+                .AddCommandLine(args)
                 .Build();
+
+            return WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://*:5000")
+                .UseConfiguration(config)
+                .UseStartup<Startup>();
+        }
     }
 }
